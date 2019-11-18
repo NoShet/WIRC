@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
@@ -73,7 +73,7 @@ namespace WIRC
             {
                 var messageText = Encoding.UTF8.GetString(message.Data);
 
-                Console.WriteLine($"Type = {message.Type}: {messageText}");
+                Console.WriteLine($"[{message.Type}] {messageText}");
             });
         }
     }
