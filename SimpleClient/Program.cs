@@ -39,6 +39,8 @@ namespace WIRC
                 return 1;
             }
 
+            Log(LogLevel.Notice, $"Connected to {serverEP}");
+
             await client.RunAsync(MessageSendLoopAsync, MessageReceivedHandlerAsync);
 
             // TODO cleanup
