@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
@@ -63,7 +63,14 @@ namespace WIRC
                     return new Message("text", data);
                 }, cancellationToken);
 
-                await client.SendMessageAsync(message);
+                try
+                {
+                    await client.SendMessageAsync(message);
+                }
+                catch (Exception e)
+                {
+                    Log(LogLevel.Error, $"Failed to send: {e.Message}");
+                }
             }
         }
 
