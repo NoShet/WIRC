@@ -66,19 +66,32 @@ namespace WIRC
                 {
                     foreach (ClientInfo client in clients.Values)
                     {
-                        // send only if connected
-                        if (client.Connection.Connected)
+                        // send message
+                        try
+                        {
                             client.SendMessage(message);
+                        }
+                        catch (IOException e)
+                        {
+                            // Thrown when client disconnects
+                        }
+                        catch (Exception e)
+                        {
+                            Log(LogLevel.Error, $"{client.ID} {e.Message}");
+                        }
 
                         // remember to remove if DC'd
-                        else
+                        if(!client.Connection.Connected)
+                        {
                             deadClients.Add(client);
+                        }
                     }
 
                     // remove clients that were found DC'd
                     foreach(ClientInfo client in deadClients)
                     {
                         clients.Remove(client.ID);
+                        Log(LogLevel.Notice, $"{client.ID} disconnected");
                     }
                 }
             }
