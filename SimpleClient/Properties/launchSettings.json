@@ -2,7 +2,7 @@
   "profiles": {
     "SimpleClient": {
       "commandName": "Project",
-      "commandLineArgs": "127.0.0.1:2424"
+      "commandLineArgs": "10.200.189.82:2424"
     }
   }
 }
