@@ -57,6 +57,8 @@ namespace WIRC
         {
             while (!token.IsCancellationRequested)
             {
+                var deadClients = new HashSet<ClientInfo>();
+
                 if (messageQueue.Count == 0)
                     await Task.Delay(LoopSleepTime, token);
 
@@ -64,7 +66,19 @@ namespace WIRC
                 {
                     foreach (ClientInfo client in clients.Values)
                     {
-                        client.SendMessage(message);
+                        // send only if connected
+                        if (client.Connection.Connected)
+                            client.SendMessage(message);
+
+                        // remember to remove if DC'd
+                        else
+                            deadClients.Add(client);
+                    }
+
+                    // remove clients that were found DC'd
+                    foreach(ClientInfo client in deadClients)
+                    {
+                        clients.Remove(client.ID);
                     }
                 }
             }
