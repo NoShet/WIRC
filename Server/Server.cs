@@ -130,6 +130,8 @@ namespace WIRC
 
                 ClientInfo client = new ClientInfo(clientConnection, GenerateClientName());
                 clients.Add(client.ID, client);
+
+                Log(LogLevel.Notice, $"{client.ID} connected");
             }
 
             listener.Stop();
